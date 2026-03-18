@@ -1,0 +1,139 @@
+import { motion } from "framer-motion";
+import { Check, AlertCircle, Flame, CalendarDays, Target } from "lucide-react";
+
+const floatingCardClass = "clay-card-sm p-4 absolute";
+
+const Hero = () => {
+  return (
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 overflow-hidden">
+      {/* Dot grid */}
+      <div className="absolute inset-0 dot-grid pointer-events-none" />
+
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Headline */}
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <motion.h1
+            className="text-5xl md:text-6xl font-heading font-extrabold tracking-tight leading-[1.1] text-foreground mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            Stop Surviving.{" "}
+            <span className="text-primary">Start Flowing.</span>
+          </motion.h1>
+          <motion.p
+            className="text-lg font-body text-muted-foreground leading-relaxed max-w-xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+          >
+            ZeroFlow organizes your daily life so you actually make progress — beautifully.
+          </motion.p>
+        </div>
+
+        {/* CTA Buttons */}
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-4 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <button className="btn-pill bg-accent text-accent-foreground shadow-[0_4px_16px_rgba(255,107,107,0.35)] text-base">
+            Get Started Free
+          </button>
+          <button className="btn-pill border-2 border-foreground/15 text-foreground hover:border-foreground/30 bg-transparent text-base">
+            See How It Works
+          </button>
+        </motion.div>
+
+        {/* Split Visual */}
+        <motion.div
+          className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[320px]">
+            {/* Chaos side */}
+            <div className="bg-foreground/5 p-8 relative flex items-center justify-center">
+              <div className="space-y-3 w-full max-w-[220px]">
+                {["Overdue: Report", "Missed: Gym", "Late: Call Mom"].map((t, i) => (
+                  <div
+                    key={i}
+                    className="bg-foreground/10 rounded-xl p-3 text-sm font-body text-foreground/60 flex items-center gap-2"
+                    style={{ transform: `rotate(${(i - 1) * 4}deg)` }}
+                  >
+                    <AlertCircle size={16} className="text-accent shrink-0" />
+                    {t}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Glowing divider */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent opacity-60" />
+
+            {/* Flow side */}
+            <div className="bg-primary/5 p-8 relative flex items-center justify-center">
+              <div className="space-y-3 w-full max-w-[220px]">
+                {["Morning Run", "Deep Work Block", "Journal & Reflect"].map((t, i) => (
+                  <div key={i} className="clay-card-sm p-3 text-sm font-body text-foreground flex items-center gap-2">
+                    <Check size={16} className="text-success shrink-0" />
+                    {t}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Floating cards */}
+        <motion.div
+          className={`${floatingCardClass} top-32 left-4 md:left-[8%] hidden lg:flex items-center gap-2`}
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="w-8 h-8 rounded-lg bg-success/20 flex items-center justify-center">
+            <Check size={16} className="text-success" />
+          </div>
+          <span className="text-xs font-body font-medium text-foreground/70">Task Done!</span>
+        </motion.div>
+
+        <motion.div
+          className={`${floatingCardClass} top-36 right-4 md:right-[8%] hidden lg:flex items-center gap-2`}
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="w-8 h-8 rounded-lg bg-sky/30 flex items-center justify-center">
+            <Target size={16} className="text-primary" />
+          </div>
+          <span className="text-xs font-body font-medium text-foreground/70">78%</span>
+        </motion.div>
+
+        <motion.div
+          className={`${floatingCardClass} bottom-20 left-4 md:left-[12%] hidden lg:flex items-center gap-2`}
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="w-8 h-8 rounded-lg bg-warm/60 flex items-center justify-center">
+            <Flame size={16} className="text-accent" />
+          </div>
+          <span className="text-xs font-body font-medium text-foreground/70">7-day streak!</span>
+        </motion.div>
+
+        <motion.div
+          className={`${floatingCardClass} bottom-24 right-4 md:right-[12%] hidden lg:flex items-center gap-2`}
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="w-8 h-8 rounded-lg bg-soft-yellow/50 flex items-center justify-center">
+            <CalendarDays size={16} className="text-foreground/60" />
+          </div>
+          <span className="text-xs font-body font-medium text-foreground/70">Today</span>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
