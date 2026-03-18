@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo.jpg";
 import { Menu, X } from "lucide-react";
 
@@ -13,6 +14,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -53,12 +55,20 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => navigate("/login")} className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
-            Login
-          </button>
-          <button onClick={() => navigate("/signup")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
-            Get Started
-          </button>
+          {user ? (
+            <button onClick={() => navigate("/dashboard")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
+              Go to Dashboard
+            </button>
+          ) : (
+            <>
+              <button onClick={() => navigate("/login")} className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
+                Login
+              </button>
+              <button onClick={() => navigate("/signup")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
+                Get Started
+              </button>
+            </>
+          )}
         </div>
 
         <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
@@ -72,8 +82,14 @@ const Navbar = () => {
             <a key={link.href} href={link.href} onClick={(e) => scrollTo(e, link.href)}
               className="text-sm font-body font-medium text-foreground/70">{link.label}</a>
           ))}
-          <button onClick={() => { setMobileOpen(false); navigate("/login"); }} className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
-          <button onClick={() => { setMobileOpen(false); navigate("/signup"); }} className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
+          {user ? (
+            <button onClick={() => { setMobileOpen(false); navigate("/dashboard"); }} className="btn-pill bg-primary text-primary-foreground w-full">Go to Dashboard</button>
+          ) : (
+            <>
+              <button onClick={() => { setMobileOpen(false); navigate("/login"); }} className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
+              <button onClick={() => { setMobileOpen(false); navigate("/signup"); }} className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
+            </>
+          )}
         </div>
       )}
     </nav>
