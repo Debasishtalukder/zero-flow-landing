@@ -55,12 +55,20 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => navigate("/login")} className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
-            Login
-          </button>
-          <button onClick={() => navigate("/signup")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
-            Get Started
-          </button>
+          {user ? (
+            <button onClick={() => navigate("/dashboard")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
+              Go to Dashboard
+            </button>
+          ) : (
+            <>
+              <button onClick={() => navigate("/login")} className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
+                Login
+              </button>
+              <button onClick={() => navigate("/signup")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
+                Get Started
+              </button>
+            </>
+          )}
         </div>
 
         <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
