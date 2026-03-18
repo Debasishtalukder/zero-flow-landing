@@ -1,13 +1,18 @@
 import { motion } from "framer-motion";
-import { CheckSquare, Flame, BarChart3, Map, CalendarDays, Sparkles } from "lucide-react";
+import featTasks from "@/assets/feat-tasks.png";
+import featStreak from "@/assets/feat-streak.png";
+import featScore from "@/assets/feat-score.png";
+import featRoadmap from "@/assets/feat-roadmap.png";
+import featCalendar from "@/assets/feat-calendar.png";
+import featAi from "@/assets/feat-ai.png";
 
 const features = [
-  { icon: CheckSquare, title: "3D Task Cards", desc: "Beautiful, tactile task cards that feel alive.", bg: "bg-success/10", iconColor: "text-success" },
-  { icon: Flame, title: "Streak System", desc: "Stay motivated with daily streaks and rewards.", bg: "bg-warm", iconColor: "text-accent" },
-  { icon: BarChart3, title: "Daily Life Score", desc: "One number that shows how your day is going.", bg: "bg-sky/30", iconColor: "text-primary" },
-  { icon: Map, title: "Roadmap Builder", desc: "Plan your weeks and months with visual clarity.", bg: "bg-lilac/50", iconColor: "text-primary" },
-  { icon: CalendarDays, title: "Smart Calendar", desc: "Auto-schedule tasks into your ideal daily flow.", bg: "bg-soft-yellow/40", iconColor: "text-foreground/70" },
-  { icon: Sparkles, title: "AI Daily Planner", desc: "Let AI optimize your day for maximum flow.", bg: "bg-primary/10", iconColor: "text-primary", pro: true },
+  { img: featTasks, title: "3D Task Cards", desc: "Beautiful, tactile task cards that feel alive.", bg: "bg-success/10" },
+  { img: featStreak, title: "Streak System", desc: "Stay motivated with daily streaks and rewards.", bg: "bg-warm" },
+  { img: featScore, title: "Daily Life Score", desc: "One number that shows how your day is going.", bg: "bg-sky/30" },
+  { img: featRoadmap, title: "Roadmap Builder", desc: "Plan your weeks and months with visual clarity.", bg: "bg-lilac/50" },
+  { img: featCalendar, title: "Smart Calendar", desc: "Auto-schedule tasks into your ideal daily flow.", bg: "bg-soft-yellow/40" },
+  { img: featAi, title: "AI Daily Planner", desc: "Let AI optimize your day for maximum flow.", bg: "bg-primary/10", pro: true },
 ];
 
 const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
@@ -16,7 +21,7 @@ const Features = () => (
   <section id="features" className="py-24 relative">
     <div className="container mx-auto px-6">
       <motion.h2
-        className="text-4xl font-heading font-bold text-center text-foreground mb-4"
+        className="text-4xl md:text-5xl font-heading font-bold text-center text-foreground mb-4"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
@@ -39,7 +44,7 @@ const Features = () => (
         {features.map((f, i) => (
           <motion.div
             key={i}
-            className={`clay-card p-7 relative ${f.bg}`}
+            className={`clay-card p-6 relative overflow-hidden ${f.bg} group cursor-default`}
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
@@ -47,15 +52,23 @@ const Features = () => (
             whileHover={{ scale: 1.03, y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } }}
           >
             {f.pro && (
-              <span className="absolute top-4 right-4 bg-primary-foreground/40 backdrop-blur-sm text-primary text-[10px] font-heading font-bold px-2.5 py-1 rounded-full">
+              <span className="absolute top-4 right-4 bg-primary-foreground/40 backdrop-blur-sm text-primary text-[10px] font-heading font-bold px-2.5 py-1 rounded-full z-10">
                 Pro
               </span>
             )}
-            <div className="w-11 h-11 rounded-xl bg-primary-foreground/60 flex items-center justify-center mb-4">
-              <f.icon size={22} className={f.iconColor} />
+
+            {/* 3D illustration */}
+            <div className="flex justify-center mb-4">
+              <motion.img
+                src={f.img}
+                alt={f.title}
+                className="w-20 h-20 object-contain drop-shadow-sm"
+                whileHover={{ scale: 1.1, rotate: 3, transition: { type: "spring", stiffness: 300, damping: 15 } }}
+              />
             </div>
-            <h3 className="text-lg font-heading font-bold text-foreground mb-1">{f.title}</h3>
-            <p className="text-sm font-body text-muted-foreground leading-relaxed">{f.desc}</p>
+
+            <h3 className="text-lg font-heading font-bold text-foreground mb-1 text-center">{f.title}</h3>
+            <p className="text-sm font-body text-muted-foreground leading-relaxed text-center">{f.desc}</p>
           </motion.div>
         ))}
       </div>
