@@ -8,9 +8,7 @@ const Footer = () => (
         {/* Logo */}
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-heading font-extrabold text-sm">
-              Z
-            </div>
+            <img src={logo} alt="ZeroFlow" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-heading text-lg font-extrabold tracking-tighter text-dark-foreground">ZeroFlow</span>
           </div>
           <p className="text-sm font-body text-dark-foreground/50">Your personal life OS.</p>
