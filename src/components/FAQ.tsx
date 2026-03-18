@@ -28,7 +28,7 @@ const FAQ = () => {
           Got questions?
         </motion.h2>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           {faqs.map((faq, i) => (
             <motion.div
               key={i}
