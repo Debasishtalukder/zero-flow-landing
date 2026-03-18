@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
 
 const FinalCTA = () => (
-  <section className="py-24 relative">
-    <div className="mx-6 rounded-3xl overflow-hidden" style={{ background: "linear-gradient(135deg, hsl(255 92% 76% / 0.15), hsl(255 100% 98%))" }}>
+  <section className="py-32 relative">
+    <div className="mx-6 rounded-3xl overflow-hidden" style={{ background: "linear-gradient(135deg, #EDE9FE 0%, #F5F3FF 50%, #E0E7FF 100%)" }}>
       <div className="container mx-auto px-6 py-20 text-center">
         <motion.h2
           className="text-4xl md:text-5xl font-heading font-extrabold text-foreground mb-4"

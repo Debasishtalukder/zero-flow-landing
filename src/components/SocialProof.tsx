@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
-const avatarColors = ["bg-primary/30", "bg-success/30", "bg-accent/30", "bg-warm", "bg-sky/40"];
+const avatarGradients = [
+  "linear-gradient(135deg, #A78BFA, #7C3AED)",
+  "linear-gradient(135deg, #34D399, #059669)",
+  "linear-gradient(135deg, #FB923C, #EA580C)",
+  "linear-gradient(135deg, #60A5FA, #2563EB)",
+  "linear-gradient(135deg, #F472B6, #DB2777)",
+];
 const initials = ["AK", "JR", "MS", "LP", "TW"];
 
 const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
@@ -27,8 +33,12 @@ const SocialProof = () => (
         viewport={{ once: true }}
         transition={{ ...spring, delay: 0.1 }}
       >
-        {avatarColors.map((c, i) => (
-          <div key={i} className={`w-10 h-10 rounded-full ${c} flex items-center justify-center text-xs font-heading font-bold text-foreground/60 -ml-2 first:ml-0 ring-2 ring-background`}>
+        {avatarGradients.map((gradient, i) => (
+          <div
+            key={i}
+            className="w-11 h-11 rounded-full flex items-center justify-center text-xs font-heading font-bold text-white -ml-2 first:ml-0 ring-2 ring-background shadow-md"
+            style={{ background: gradient }}
+          >
             {initials[i]}
           </div>
         ))}

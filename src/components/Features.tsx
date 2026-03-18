@@ -7,12 +7,12 @@ import featCalendar from "@/assets/feat-calendar.png";
 import featAi from "@/assets/feat-ai.png";
 
 const features = [
-  { img: featTasks, title: "3D Task Cards", desc: "Beautiful, tactile task cards that feel alive.", bg: "bg-success/10" },
-  { img: featStreak, title: "Streak System", desc: "Stay motivated with daily streaks and rewards.", bg: "bg-warm" },
-  { img: featScore, title: "Daily Life Score", desc: "One number that shows how your day is going.", bg: "bg-sky/30" },
-  { img: featRoadmap, title: "Roadmap Builder", desc: "Plan your weeks and months with visual clarity.", bg: "bg-lilac/50" },
-  { img: featCalendar, title: "Smart Calendar", desc: "Auto-schedule tasks into your ideal daily flow.", bg: "bg-soft-yellow/40" },
-  { img: featAi, title: "AI Daily Planner", desc: "Let AI optimize your day for maximum flow.", bg: "bg-primary/10", pro: true },
+  { img: featTasks, title: "3D Task Cards", desc: "Beautiful, tactile task cards that feel alive.", bgColor: "#E8FDF5" },
+  { img: featStreak, title: "Streak System", desc: "Stay motivated with daily streaks and rewards.", bgColor: "#FFF0E6" },
+  { img: featScore, title: "Daily Life Score", desc: "One number that shows how your day is going.", bgColor: "#E8F4FF" },
+  { img: featRoadmap, title: "Roadmap Builder", desc: "Plan your weeks and months with visual clarity.", bgColor: "#F3E8FF" },
+  { img: featCalendar, title: "Smart Calendar", desc: "Auto-schedule tasks into your ideal daily flow.", bgColor: "#FFFBE6" },
+  { img: featAi, title: "AI Daily Planner", desc: "Let AI optimize your day for maximum flow.", bgColor: "#EDE9FE", pro: true },
 ];
 
 const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
@@ -44,7 +44,8 @@ const Features = () => (
         {features.map((f, i) => (
           <motion.div
             key={i}
-            className={`clay-card p-6 relative overflow-hidden ${f.bg} group cursor-default`}
+            className="clay-card p-6 relative overflow-hidden group cursor-default"
+            style={{ backgroundColor: f.bgColor }}
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
