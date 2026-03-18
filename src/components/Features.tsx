@@ -44,7 +44,8 @@ const Features = () => (
         {features.map((f, i) => (
           <motion.div
             key={i}
-            className={`clay-card p-6 relative overflow-hidden ${f.bg} group cursor-default`}
+            className="clay-card p-6 relative overflow-hidden group cursor-default"
+            style={{ backgroundColor: f.bgColor }}
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}

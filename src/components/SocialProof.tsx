@@ -33,8 +33,12 @@ const SocialProof = () => (
         viewport={{ once: true }}
         transition={{ ...spring, delay: 0.1 }}
       >
-        {avatarColors.map((c, i) => (
-          <div key={i} className={`w-10 h-10 rounded-full ${c} flex items-center justify-center text-xs font-heading font-bold text-foreground/60 -ml-2 first:ml-0 ring-2 ring-background`}>
+        {avatarGradients.map((gradient, i) => (
+          <div
+            key={i}
+            className="w-11 h-11 rounded-full flex items-center justify-center text-xs font-heading font-bold text-white -ml-2 first:ml-0 ring-2 ring-background shadow-md"
+            style={{ background: gradient }}
+          >
             {initials[i]}
           </div>
         ))}

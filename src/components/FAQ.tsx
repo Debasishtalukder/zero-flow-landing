@@ -33,6 +33,7 @@ const FAQ = () => {
             <motion.div
               key={i}
               className="clay-card overflow-hidden"
+              style={{ backgroundColor: "#F8F7FF" }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
