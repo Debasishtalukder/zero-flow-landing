@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import logo from "@/assets/logo.jpg";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -36,9 +37,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-6">
         <a href="#" className="flex items-center gap-2" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-heading font-extrabold text-lg">
-            Z
-          </div>
+          <img src={logo} alt="ZeroFlow" className="w-9 h-9 rounded-xl object-cover" />
           <span className="font-heading text-xl font-extrabold tracking-tighter text-foreground">
             ZeroFlow
           </span>
