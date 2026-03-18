@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Check, AlertCircle, Flame, CalendarDays, Target,
   Bell, Clock, FileWarning, Zap, BarChart3
@@ -22,6 +23,8 @@ const float = (delay: number, duration: number) => ({
 });
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden">
       <div className="absolute inset-0 dot-grid pointer-events-none" />
@@ -53,10 +56,11 @@ const Hero = () => {
           className="flex flex-wrap items-center justify-center gap-4 mb-16 md:mb-24"
           {...fadeUp(0.2)}
         >
-          <button className="btn-pill bg-accent text-accent-foreground shadow-[0_6px_20px_rgba(255,107,107,0.35)] text-lg px-10 py-4">
+          <button onClick={() => navigate("/signup")} className="btn-pill bg-accent text-accent-foreground shadow-[0_6px_20px_rgba(255,107,107,0.35)] text-lg px-10 py-4">
             Get Started Free
           </button>
-          <button className="btn-pill border-2 border-foreground/12 text-foreground hover:border-foreground/25 bg-transparent text-lg px-10 py-4">
+          <button onClick={() => { const el = document.querySelector("#how-it-works"); if (el) el.scrollIntoView({ behavior: "smooth" }); }}
+            className="btn-pill border-2 border-foreground/12 text-foreground hover:border-foreground/25 bg-transparent text-lg px-10 py-4">
             See How It Works
           </button>
         </motion.div>

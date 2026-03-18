@@ -14,13 +14,224 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      milestones: {
+        Row: {
+          completed: boolean | null
+          due_date: string | null
+          id: string
+          roadmap_id: string
+          title: string
+        }
+        Insert: {
+          completed?: boolean | null
+          due_date?: string | null
+          id?: string
+          roadmap_id: string
+          title: string
+        }
+        Update: {
+          completed?: boolean | null
+          due_date?: string | null
+          id?: string
+          roadmap_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "milestones_roadmap_id_fkey"
+            columns: ["roadmap_id"]
+            isOneToOne: false
+            referencedRelation: "roadmaps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          plan: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          plan?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          plan?: string | null
+        }
+        Relationships: []
+      }
+      roadmaps: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          progress_percent: number | null
+          target_date: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          progress_percent?: number | null
+          target_date?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          progress_percent?: number | null
+          target_date?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roadmaps_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routine_config: {
+        Row: {
+          gaming_hours: number | null
+          id: string
+          meal_hours: number | null
+          other_hours: number | null
+          sleep_hours: number | null
+          user_id: string
+        }
+        Insert: {
+          gaming_hours?: number | null
+          id?: string
+          meal_hours?: number | null
+          other_hours?: number | null
+          sleep_hours?: number | null
+          user_id: string
+        }
+        Update: {
+          gaming_hours?: number | null
+          id?: string
+          meal_hours?: number | null
+          other_hours?: number | null
+          sleep_hours?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "routine_config_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      task_logs: {
+        Row: {
+          date: string | null
+          id: string
+          status: string
+          task_id: string
+          user_id: string
+        }
+        Insert: {
+          date?: string | null
+          id?: string
+          status: string
+          task_id: string
+          user_id: string
+        }
+        Update: {
+          date?: string | null
+          id?: string
+          status?: string
+          task_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_logs_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          duration_min: number | null
+          id: string
+          name: string
+          start_date: string | null
+          total_days: number | null
+          type: string | null
+          user_id: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          duration_min?: number | null
+          id?: string
+          name: string
+          start_date?: string | null
+          total_days?: number | null
+          type?: string | null
+          user_id: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          duration_min?: number | null
+          id?: string
+          name?: string
+          start_date?: string | null
+          total_days?: number | null
+          type?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      owns_roadmap: { Args: { _roadmap_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
