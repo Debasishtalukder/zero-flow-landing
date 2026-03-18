@@ -21,7 +21,7 @@ const DashboardNavbar = () => {
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-border/50">
       <div className="flex items-center justify-between px-6 py-3">
         <div className="flex items-center gap-2">
-          <img src={logo} alt="ZeroFlow" className="w-8 h-8 rounded-xl" />
+          <img src={logo} alt="ZeroFlow" className="w-8 h-8 object-contain" />
           <span className="font-heading font-bold text-lg text-foreground">ZeroFlow</span>
         </div>
 
