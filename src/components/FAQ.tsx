@@ -10,6 +10,8 @@ const faqs = [
   { q: "Is my data safe?", a: "Your data is encrypted and stored securely. We never sell your personal information." },
 ];
 
+const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
+
 const FAQ = () => {
   const [open, setOpen] = useState<number | null>(null);
 
@@ -18,9 +20,10 @@ const FAQ = () => {
       <div className="container mx-auto px-6 max-w-2xl">
         <motion.h2
           className="text-4xl font-heading font-bold text-center text-foreground mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={spring}
         >
           Got questions?
         </motion.h2>
@@ -32,15 +35,18 @@ const FAQ = () => {
               className="clay-card overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ ...spring, delay: i * 0.06 }}
             >
               <button
                 className="w-full flex items-center justify-between p-6 text-left"
                 onClick={() => setOpen(open === i ? null : i)}
               >
                 <span className="font-heading font-bold text-foreground text-base pr-4">{faq.q}</span>
-                <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                <motion.div
+                  animate={{ rotate: open === i ? 180 : 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                >
                   <ChevronDown size={20} className="text-primary shrink-0" />
                 </motion.div>
               </button>
@@ -50,7 +56,7 @@ const FAQ = () => {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ type: "spring", stiffness: 120, damping: 20 }}
                   >
                     <p className="px-6 pb-6 text-sm font-body text-muted-foreground leading-relaxed">
                       {faq.a}

@@ -10,32 +10,41 @@ const features = [
   { icon: Sparkles, title: "AI Daily Planner", desc: "Let AI optimize your day for maximum flow.", bg: "bg-primary/10", iconColor: "text-primary", pro: true },
 ];
 
+const spring = { type: "spring" as const, stiffness: 80, damping: 20 };
+
 const Features = () => (
   <section id="features" className="py-24 relative">
     <div className="container mx-auto px-6">
       <motion.h2
         className="text-4xl font-heading font-bold text-center text-foreground mb-4"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={spring}
         style={{ textWrap: "balance" } as React.CSSProperties}
       >
         Everything you need to build a better life.
       </motion.h2>
-      <p className="text-center text-muted-foreground font-body mb-16 max-w-md mx-auto">
+      <motion.p
+        className="text-center text-muted-foreground font-body mb-16 max-w-md mx-auto"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ ...spring, delay: 0.08 }}
+      >
         Six powerful tools designed to help you grow every single day.
-      </p>
+      </motion.p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {features.map((f, i) => (
           <motion.div
             key={i}
             className={`clay-card p-7 relative ${f.bg}`}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.08, ease: [0.34, 1.56, 0.64, 1] }}
-            whileHover={{ scale: 1.02, y: -5 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ ...spring, delay: i * 0.07 }}
+            whileHover={{ scale: 1.03, y: -6, transition: { type: "spring", stiffness: 300, damping: 20 } }}
           >
             {f.pro && (
               <span className="absolute top-4 right-4 bg-primary-foreground/40 backdrop-blur-sm text-primary text-[10px] font-heading font-bold px-2.5 py-1 rounded-full">
