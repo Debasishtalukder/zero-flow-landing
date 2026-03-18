@@ -1,5 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Menu, X } from "lucide-react";
+
+const navLinks = [
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Roadmap", href: "#faq" },
+];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -11,15 +17,25 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollTo = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    const el = document.querySelector(href);
+    if (el) {
+      const offset = 80;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }, []);
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 h-20 flex items-center transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 h-20 flex items-center transition-all duration-500 ${
         scrolled ? "bg-background/60 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-6">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2">
+        <a href="#" className="flex items-center gap-2" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
           <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-heading font-extrabold text-lg">
             Z
           </div>
@@ -28,14 +44,19 @@ const Navbar = () => {
           </span>
         </a>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors">Features</a>
-          <a href="#pricing" className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors">Pricing</a>
-          <a href="#faq" className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors">Roadmap</a>
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => scrollTo(e, link.href)}
+              className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
 
-        {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
           <button className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
             Login
@@ -45,18 +66,23 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile toggle */}
         <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-lg p-6 flex flex-col gap-4 md:hidden shadow-lg">
-          <a href="#features" className="text-sm font-body font-medium text-foreground/70" onClick={() => setMobileOpen(false)}>Features</a>
-          <a href="#pricing" className="text-sm font-body font-medium text-foreground/70" onClick={() => setMobileOpen(false)}>Pricing</a>
-          <a href="#faq" className="text-sm font-body font-medium text-foreground/70" onClick={() => setMobileOpen(false)}>Roadmap</a>
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => scrollTo(e, link.href)}
+              className="text-sm font-body font-medium text-foreground/70"
+            >
+              {link.label}
+            </a>
+          ))}
           <button className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
           <button className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
         </div>
