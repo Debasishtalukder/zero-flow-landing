@@ -82,8 +82,14 @@ const Navbar = () => {
             <a key={link.href} href={link.href} onClick={(e) => scrollTo(e, link.href)}
               className="text-sm font-body font-medium text-foreground/70">{link.label}</a>
           ))}
-          <button onClick={() => { setMobileOpen(false); navigate("/login"); }} className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
-          <button onClick={() => { setMobileOpen(false); navigate("/signup"); }} className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
+          {user ? (
+            <button onClick={() => { setMobileOpen(false); navigate("/dashboard"); }} className="btn-pill bg-primary text-primary-foreground w-full">Go to Dashboard</button>
+          ) : (
+            <>
+              <button onClick={() => { setMobileOpen(false); navigate("/login"); }} className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
+              <button onClick={() => { setMobileOpen(false); navigate("/signup"); }} className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
+            </>
+          )}
         </div>
       )}
     </nav>
