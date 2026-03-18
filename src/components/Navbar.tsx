@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.jpg";
 import { Menu, X } from "lucide-react";
 
@@ -11,6 +12,7 @@ const navLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -38,29 +40,23 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between px-6">
         <a href="#" className="flex items-center gap-2" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
           <img src={logo} alt="ZeroFlow" className="w-9 h-9 rounded-xl object-cover" />
-          <span className="font-heading text-xl font-extrabold tracking-tighter text-foreground">
-            ZeroFlow
-          </span>
+          <span className="font-heading text-xl font-extrabold tracking-tighter text-foreground">ZeroFlow</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => scrollTo(e, link.href)}
-              className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
-            >
+            <a key={link.href} href={link.href} onClick={(e) => scrollTo(e, link.href)}
+              className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors duration-300">
               {link.label}
             </a>
           ))}
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
+          <button onClick={() => navigate("/login")} className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
             Login
           </button>
-          <button className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
+          <button onClick={() => navigate("/signup")} className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
             Get Started
           </button>
         </div>
@@ -73,17 +69,11 @@ const Navbar = () => {
       {mobileOpen && (
         <div className="absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-lg p-6 flex flex-col gap-4 md:hidden shadow-lg">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => scrollTo(e, link.href)}
-              className="text-sm font-body font-medium text-foreground/70"
-            >
-              {link.label}
-            </a>
+            <a key={link.href} href={link.href} onClick={(e) => scrollTo(e, link.href)}
+              className="text-sm font-body font-medium text-foreground/70">{link.label}</a>
           ))}
-          <button className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
-          <button className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
+          <button onClick={() => { setMobileOpen(false); navigate("/login"); }} className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
+          <button onClick={() => { setMobileOpen(false); navigate("/signup"); }} className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
         </div>
       )}
     </nav>
