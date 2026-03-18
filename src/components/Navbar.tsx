@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import logo from "@/assets/logo.jpg";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [

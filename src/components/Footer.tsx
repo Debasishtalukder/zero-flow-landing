@@ -1,4 +1,5 @@
 import { Twitter, Github } from "lucide-react";
+import logo from "@/assets/logo.jpg";
 
 const Footer = () => (
   <footer className="bg-dark text-dark-foreground py-16">
