@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Check, AlertCircle, Flame, CalendarDays, Target } from "lucide-react";
+import heroChaos from "@/assets/hero-chaos.png";
+import heroFlow from "@/assets/hero-flow.png";
 
 const floatingCardClass = "clay-card-sm p-4 absolute";
 
@@ -46,17 +48,22 @@ const Hero = () => {
           </button>
         </motion.div>
 
-        {/* Split Visual */}
+        {/* Split Visual with images */}
         <motion.div
           className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[320px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[360px]">
             {/* Chaos side */}
-            <div className="bg-foreground/5 p-8 relative flex items-center justify-center">
-              <div className="space-y-3 w-full max-w-[220px]">
+            <div className="relative bg-foreground/5 p-8 flex flex-col items-center justify-center gap-5">
+              <img
+                src={heroChaos}
+                alt="Chaotic task management"
+                className="w-40 h-40 object-contain rounded-2xl opacity-80"
+              />
+              <div className="space-y-2.5 w-full max-w-[220px]">
                 {["Overdue: Report", "Missed: Gym", "Late: Call Mom"].map((t, i) => (
                   <div
                     key={i}
@@ -71,11 +78,16 @@ const Hero = () => {
             </div>
 
             {/* Glowing divider */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent opacity-60" />
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary to-transparent opacity-60 z-10" />
 
             {/* Flow side */}
-            <div className="bg-primary/5 p-8 relative flex items-center justify-center">
-              <div className="space-y-3 w-full max-w-[220px]">
+            <div className="relative bg-primary/5 p-8 flex flex-col items-center justify-center gap-5">
+              <img
+                src={heroFlow}
+                alt="Organized ZeroFlow dashboard"
+                className="w-40 h-40 object-contain rounded-2xl"
+              />
+              <div className="space-y-2.5 w-full max-w-[220px]">
                 {["Morning Run", "Deep Work Block", "Journal & Reflect"].map((t, i) => (
                   <div key={i} className="clay-card-sm p-3 text-sm font-body text-foreground flex items-center gap-2">
                     <Check size={16} className="text-success shrink-0" />
