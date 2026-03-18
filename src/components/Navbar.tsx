@@ -1,0 +1,68 @@
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 h-20 flex items-center transition-all duration-300 ${
+        scrolled ? "bg-background/60 backdrop-blur-md shadow-sm" : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto flex items-center justify-between px-6">
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2">
+          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-heading font-extrabold text-lg">
+            Z
+          </div>
+          <span className="font-heading text-xl font-extrabold tracking-tighter text-foreground">
+            ZeroFlow
+          </span>
+        </a>
+
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-8">
+          <a href="#features" className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors">Features</a>
+          <a href="#pricing" className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors">Pricing</a>
+          <a href="#faq" className="text-sm font-body font-medium text-foreground/70 hover:text-foreground transition-colors">Roadmap</a>
+        </div>
+
+        {/* Desktop CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          <button className="btn-pill border-2 border-primary/20 text-foreground hover:border-primary/50 bg-transparent">
+            Login
+          </button>
+          <button className="btn-pill bg-primary text-primary-foreground shadow-[0_4px_12px_rgba(167,139,250,0.4)]">
+            Get Started
+          </button>
+        </div>
+
+        {/* Mobile toggle */}
+        <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-lg p-6 flex flex-col gap-4 md:hidden shadow-lg">
+          <a href="#features" className="text-sm font-body font-medium text-foreground/70" onClick={() => setMobileOpen(false)}>Features</a>
+          <a href="#pricing" className="text-sm font-body font-medium text-foreground/70" onClick={() => setMobileOpen(false)}>Pricing</a>
+          <a href="#faq" className="text-sm font-body font-medium text-foreground/70" onClick={() => setMobileOpen(false)}>Roadmap</a>
+          <button className="btn-pill border-2 border-primary/20 text-foreground bg-transparent w-full">Login</button>
+          <button className="btn-pill bg-primary text-primary-foreground w-full">Get Started</button>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
