@@ -40,7 +40,7 @@ import MobileBottomNav from "@/components/dashboard/MobileBottomNav";
 import StatsCards from "@/components/dashboard/StatsCards";
 import TaskCard from "@/components/dashboard/TaskCard";
 import AddTaskModal from "@/components/dashboard/AddTaskModal";
-import UpgradeModal from "@/components/UpgradeModal";
+import ComingSoonModal from "@/components/ui/ComingSoonModal";
 import AIPlannerModal from "@/components/dashboard/AIPlannerModal";
 import DailyTimeline from "@/components/dashboard/DailyTimeline";
 import MiniCalendar from "@/components/dashboard/MiniCalendar";
@@ -447,7 +447,7 @@ const Dashboard = () => {
         onCreated={handleTaskCreated} 
         editTask={taskToEdit}
       />
-      <UpgradeModal open={upgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} message="You've reached the free plan limit of 5 tasks." />
+      <ComingSoonModal isOpen={upgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} />
       <AIPlannerModal open={aiPlannerOpen} onClose={() => setAiPlannerOpen(false)} tasks={tasks} routine={routine} />
 
       {/* Mood Check-In Widget */}

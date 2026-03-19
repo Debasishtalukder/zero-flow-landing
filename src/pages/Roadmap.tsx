@@ -7,7 +7,7 @@ import { toast } from "@/hooks/use-toast";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import MobileBottomNav from "@/components/dashboard/MobileBottomNav";
-import UpgradeModal from "@/components/UpgradeModal";
+import ComingSoonModal from "@/components/ui/ComingSoonModal";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface Milestone {
@@ -427,8 +427,8 @@ const Roadmap = () => {
         </div>
       )}
 
-      {/* Upgrade Modal */}
-      <UpgradeModal open={upgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} message="You've reached the free plan limit of 1 roadmap." />
+      {/* Upgrade Modal replaced with Coming Soon */}
+      <ComingSoonModal isOpen={upgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} />
     </div>
   );
 };

@@ -8,9 +8,10 @@ import ComingSoonModal from "@/components/ui/ComingSoonModal";
 import { toast } from "@/hooks/use-toast";
 
 const Upgrade = () => {
-  const { user, refreshProfile } = useAuth();
+  const { user, userProfile, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const isPro = userProfile?.plan === "pro";
 
   const handleUpgrade = () => {
     if (!user) {
@@ -76,8 +77,12 @@ const Upgrade = () => {
               ))}
             </ul>
             
-            <button disabled className="w-full py-3 rounded-2xl bg-slate-100 text-slate-400 font-heading font-bold text-sm cursor-not-allowed">
-              Current Plan
+            <button 
+              disabled={!isPro} 
+              className={`w-full py-3 rounded-2xl font-heading font-bold text-sm transition-all ${!isPro ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-violet-100 text-violet-600 hover:bg-violet-200"}`}
+              onClick={() => !isPro ? null : navigate("/dashboard")}
+            >
+              {!isPro ? "Current Plan" : "Downgrade"}
             </button>
           </div>
 
@@ -119,11 +124,12 @@ const Upgrade = () => {
             </ul>
             
             <button 
-              onClick={handleUpgrade}
-              className="w-full py-4 rounded-2xl text-white font-heading font-bold text-sm transition-all hover:scale-[1.02] shadow-[0_8px_20px_-4px_rgba(124,58,237,0.4)] disabled:opacity-70 flex items-center justify-center gap-2"
-              style={{ background: "linear-gradient(135deg, #7C3AED 0%, #9333EA 100%)" }}
+              onClick={isPro ? undefined : handleUpgrade}
+              disabled={isPro}
+              className={`w-full py-4 rounded-2xl text-white font-heading font-bold text-sm transition-all shadow-[0_8px_20px_-4px_rgba(124,58,237,0.4)] flex items-center justify-center gap-2 ${isPro ? "opacity-70 cursor-default" : "hover:scale-[1.02]"}`}
+              style={{ background: isPro ? "#6B7280" : "linear-gradient(135deg, #7C3AED 0%, #9333EA 100%)" }}
             >
-              Get Pro Now
+              {isPro ? "Active Plan" : "Get Pro Now"}
             </button>
           </div>
 

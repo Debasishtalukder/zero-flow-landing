@@ -63,8 +63,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (newSettings) combinedData = { ...combinedData, ...newSettings };
       }
       
-      // Hardcode plan to free since payments are strictly disabled
-      combinedData.plan = "free";
+      // Use plan from DB, fallback to "free" if not set
+      combinedData.plan = combinedData.plan || "free";
+      
+      // Manual overrides for paying users as requested
+      const payingEmails = ["debatulakder@gmail.com", "debatalukder55@gmail.com"];
+      if (session?.user?.email && payingEmails.includes(session.user.email.toLowerCase())) {
+        combinedData.plan = "pro";
+      }
       
       setUserProfile(combinedData as UserProfile);
     } catch (e) {
