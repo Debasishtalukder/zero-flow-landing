@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      journal_entries: {
+        Row: {
+          content: string
+          created_at: string | null
+          date: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          date?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          date?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_entries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       milestones: {
         Row: {
           completed: boolean | null
@@ -46,27 +78,80 @@ export type Database = {
           },
         ]
       }
+      mood_logs: {
+        Row: {
+          created_at: string | null
+          date: string
+          id: string
+          mood_score: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          date?: string
+          id?: string
+          mood_score: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          id?: string
+          mood_score?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mood_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string | null
           email: string | null
           full_name: string | null
           id: string
+          level: number | null
+          notifications_enabled: boolean | null
           plan: string | null
+          theme_preference: string | null
+          total_xp: number | null
+          vacation_end: string | null
+          vacation_start: string | null
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
           id: string
+          level?: number | null
+          notifications_enabled?: boolean | null
           plan?: string | null
+          theme_preference?: string | null
+          total_xp?: number | null
+          vacation_end?: string | null
+          vacation_start?: string | null
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
           id?: string
+          level?: number | null
+          notifications_enabled?: boolean | null
           plan?: string | null
+          theme_preference?: string | null
+          total_xp?: number | null
+          vacation_end?: string | null
+          vacation_start?: string | null
         }
         Relationships: []
       }
@@ -184,33 +269,48 @@ export type Database = {
       }
       tasks: {
         Row: {
+          category: string | null
           color: string | null
           created_at: string | null
           duration_min: number | null
+          frequency_config: Json | null
+          frequency_type: string | null
           id: string
           name: string
+          reminder_time: string | null
+          sort_order: number | null
           start_date: string | null
           total_days: number | null
           type: string | null
           user_id: string
         }
         Insert: {
+          category?: string | null
           color?: string | null
           created_at?: string | null
           duration_min?: number | null
+          frequency_config?: Json | null
+          frequency_type?: string | null
           id?: string
           name: string
+          reminder_time?: string | null
+          sort_order?: number | null
           start_date?: string | null
           total_days?: number | null
           type?: string | null
           user_id: string
         }
         Update: {
+          category?: string | null
           color?: string | null
           created_at?: string | null
           duration_min?: number | null
+          frequency_config?: Json | null
+          frequency_type?: string | null
           id?: string
           name?: string
+          reminder_time?: string | null
+          sort_order?: number | null
           start_date?: string | null
           total_days?: number | null
           type?: string | null
@@ -219,6 +319,65 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "tasks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_settings: {
+        Row: {
+          created_at: string | null
+          notifications_enabled: boolean | null
+          theme_preference: string | null
+          updated_at: string | null
+          user_id: string
+          vacation_end: string | null
+          vacation_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          notifications_enabled?: boolean | null
+          theme_preference?: string | null
+          updated_at?: string | null
+          user_id: string
+          vacation_end?: string | null
+          vacation_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          notifications_enabled?: boolean | null
+          theme_preference?: string | null
+          updated_at?: string | null
+          user_id?: string
+          vacation_end?: string | null
+          vacation_start?: string | null
+        }
+        Relationships: []
+      }
+      waitlist: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waitlist_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

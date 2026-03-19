@@ -12,12 +12,31 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const attempts = parseInt(localStorage.getItem("zf_login_attempts") || "0");
+    const lockout = parseInt(localStorage.getItem("zf_login_lockout") || "0");
+    
+    if (lockout && Date.now() < lockout) {
+      toast({ title: "Too many attempts", description: "Please wait 15 minutes.", variant: "destructive" });
+      return;
+    }
+    
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
+    
     if (error) {
-      toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      const newAttempts = attempts + 1;
+      localStorage.setItem("zf_login_attempts", newAttempts.toString());
+      if (newAttempts >= 5) {
+        localStorage.setItem("zf_login_lockout", (Date.now() + 15 * 60 * 1000).toString());
+        toast({ title: "Too many attempts", description: "Please wait 15 minutes.", variant: "destructive" });
+      } else {
+        toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      }
     } else {
+      localStorage.removeItem("zf_login_attempts");
+      localStorage.removeItem("zf_login_lockout");
       navigate("/dashboard");
     }
   };

@@ -1,19 +1,19 @@
-import { Home, Calendar, Map, BarChart3, Settings } from "lucide-react";
+import { Home, Calendar, Map, BarChart3, Settings, PenLine } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 const items = [
   { icon: Home, label: "Home", path: "/dashboard" },
   { icon: Calendar, label: "Calendar", path: "/dashboard/calendar" },
+  { icon: PenLine, label: "Journal", path: "/journal" },
   { icon: Map, label: "Roadmap", path: "/roadmap" },
-  { icon: BarChart3, label: "Progress", path: "/progress" },
-  { icon: Settings, label: "Settings", path: "/dashboard/settings" },
+  { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
 const MobileBottomNav = () => {
   const location = useLocation();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-border/50">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-card/90 backdrop-blur-md border-t border-border/50">
       <div className="flex items-center justify-around py-2">
         {items.map((item) => {
           const isActive =
