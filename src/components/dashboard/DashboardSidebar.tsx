@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
+import { Sparkles } from "lucide-react";
 
 const navItems = [
   { icon: Home, label: "Dashboard", href: "/dashboard" },
@@ -28,6 +30,7 @@ function getLevelInfo(totalXP: number) {
 
 const DashboardSidebar = () => {
   const { user, userProfile } = useAuth();
+  const { isPro: isSubscriptionPro } = useSubscription();
   const [streak, setStreak] = useState(0);
   const [freeHours, setFreeHours] = useState(0);
   const [firstRoadmap, setFirstRoadmap] = useState<{ title: string; progress_percent: number } | null>(null);
@@ -115,7 +118,14 @@ const DashboardSidebar = () => {
               displayName.charAt(0).toUpperCase()
             )}
           </div>
-          <p className="text-xs font-body text-foreground truncate">Hi, {displayName} 👋</p>
+          <div className="flex flex-col min-w-0">
+            <p className="text-xs font-body text-foreground truncate">Hi, {displayName} 👋</p>
+            {(userProfile?.plan === "pro" || isSubscriptionPro) && (
+              <span className="flex items-center gap-0.5 text-[9px] font-heading font-black text-violet-600 dark:text-violet-400">
+                <Sparkles className="w-2 h-2" /> PRO
+              </span>
+            )}
+          </div>
         </div>
 
         <nav className="flex flex-col gap-0.5">

@@ -3,6 +3,7 @@ import { ArrowLeft, Save, Calendar, ChevronLeft, ChevronRight } from "lucide-rea
 import { NavLink } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import { toast } from "@/hooks/use-toast";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
@@ -12,6 +13,7 @@ import { sanitizeInput } from "@/lib/sanitize";
 
 const Journal = () => {
   const { user, userProfile, refreshProfile } = useAuth();
+  const { isPro: isSubscriptionPro } = useSubscription();
   const [content, setContent] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
   const [saving, setSaving] = useState(false);
@@ -24,7 +26,7 @@ const Journal = () => {
 
   const today = new Date().toISOString().split("T")[0];
   const isToday = selectedDate === today;
-  const isPro = userProfile?.plan === "pro";
+  const isPro = userProfile?.plan === "pro" || isSubscriptionPro;
   const FREE_LIMIT = 7;
   const isLocked = !isPro && totalEntries >= FREE_LIMIT && !entryId;
 

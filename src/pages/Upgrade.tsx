@@ -3,22 +3,25 @@ import { ArrowLeft, Check, Sparkles, Zap } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
-import ComingSoonModal from "@/components/ui/ComingSoonModal";
 import { toast } from "@/hooks/use-toast";
 
 const Upgrade = () => {
-  const { user, userProfile, refreshProfile } = useAuth();
+  const { user, userProfile } = useAuth();
+  const { isPro: isSubscriptionPro, showPaywall, showCustomerPortal, loading } = useSubscription();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const isPro = userProfile?.plan === "pro";
+  
+  // Use either the DB plan or the RevenueCat subscription status
+  const isPro = userProfile?.plan === "pro" || isSubscriptionPro;
 
-  const handleUpgrade = () => {
+  const handleUpgrade = async () => {
     if (!user) {
       toast({ title: "Please sign in to upgrade" });
+      navigate("/login");
       return;
     }
-    setShowModal(true);
+    await showPaywall();
   };
 
   return (
@@ -124,19 +127,17 @@ const Upgrade = () => {
             </ul>
             
             <button 
-              onClick={isPro ? undefined : handleUpgrade}
-              disabled={isPro}
-              className={`w-full py-4 rounded-2xl text-white font-heading font-bold text-sm transition-all shadow-[0_8px_20px_-4px_rgba(124,58,237,0.4)] flex items-center justify-center gap-2 ${isPro ? "opacity-70 cursor-default" : "hover:scale-[1.02]"}`}
+              onClick={isPro ? showCustomerPortal : handleUpgrade}
+              disabled={loading}
+              className={`w-full py-4 rounded-2xl text-white font-heading font-bold text-sm transition-all shadow-[0_8px_20px_-4px_rgba(124,58,237,0.4)] flex items-center justify-center gap-2 ${loading ? "opacity-70 cursor-wait" : "hover:scale-[1.02]"}`}
               style={{ background: isPro ? "#6B7280" : "linear-gradient(135deg, #7C3AED 0%, #9333EA 100%)" }}
             >
-              {isPro ? "Active Plan" : "Get Pro Now"}
+              {loading ? "Loading..." : isPro ? "Manage Subscription" : "Get Pro Now"}
             </button>
           </div>
 
         </div>
       </div>
-      
-      <ComingSoonModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };

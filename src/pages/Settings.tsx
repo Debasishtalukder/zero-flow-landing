@@ -3,6 +3,7 @@ import { ArrowLeft, Zap, Sparkles, Camera, Loader2, Sun, Moon, Monitor, Bell, Be
 import { NavLink, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { toast } from "@/hooks/use-toast";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
@@ -13,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Settings = () => {
   const { user, userProfile, signOut, refreshProfile } = useAuth();
+  const { isPro: isSubscriptionPro, showPaywall, showCustomerPortal, loading: subscriptionLoading } = useSubscription();
   const { theme, setTheme} = useTheme();
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
@@ -38,6 +40,9 @@ const Settings = () => {
   // Vacation state
   const [vacationStart, setVacationStart] = useState("");
   const [vacationEnd, setVacationEnd] = useState("");
+
+  // Use either the DB plan or the RevenueCat subscription status
+  const isPro = userProfile?.plan === "pro" || isSubscriptionPro;
 
   useEffect(() => {
     if (!user || !userProfile) return;
@@ -214,11 +219,11 @@ const Settings = () => {
           </div>
 
           {/* Your Plan Section */}
-          <div className="clay-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 border-2 border-violet-100/50" style={userProfile?.plan === "pro" ? { background: "linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 100%)", borderColor: "#C4B5FD" } : {}}>
+          <div className="clay-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 border-2 border-violet-100/50" style={isPro ? { background: "linear-gradient(135deg, #F5F3FF 0%, #FFFFFF 100%)", borderColor: "#C4B5FD" } : {}}>
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-heading font-bold text-lg text-foreground">Your Plan:</h3>
-                {userProfile?.plan === "pro" ? (
+                {isPro ? (
                   <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-violet-100 text-violet-700">
                     <Sparkles className="w-3 h-3" /> Pro Plan
                   </span>
@@ -229,29 +234,32 @@ const Settings = () => {
                 )}
               </div>
               <p className="font-body text-sm text-muted-foreground mb-4">
-                {userProfile?.plan === "pro" ? "You have unlimited access to all features." : "Upgrade to Pro to unlock unlimited tasks and exclusive features."}
+                {isPro ? "You have unlimited access to all features." : "Upgrade to Pro to unlock unlimited tasks and exclusive features."}
               </p>
               
               <div className="flex gap-6">
                 <div>
                   <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Tasks Used</p>
-                  <p className="font-heading font-bold text-foreground">{tasksCount} <span className="text-muted-foreground font-body font-normal">{userProfile?.plan === "pro" ? "" : "/ 5"}</span></p>
+                  <p className="font-heading font-bold text-foreground">{tasksCount} <span className="text-muted-foreground font-body font-normal">{isPro ? "" : "/ 5"}</span></p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Roadmaps Used</p>
-                  <p className="font-heading font-bold text-foreground">{roadmapsCount} <span className="text-muted-foreground font-body font-normal">{userProfile?.plan === "pro" ? "" : "/ 1"}</span></p>
+                  <p className="font-heading font-bold text-foreground">{roadmapsCount} <span className="text-muted-foreground font-body font-normal">{isPro ? "" : "/ 1"}</span></p>
                 </div>
               </div>
             </div>
             
             <div className="shrink-0">
-              {userProfile?.plan === "pro" ? (
-                <button className="btn-pill bg-white dark:bg-muted border border-slate-200 dark:border-muted text-slate-700 dark:text-foreground hover:bg-slate-50 transition-colors w-full md:w-auto">
+              {isPro ? (
+                <button 
+                  onClick={showCustomerPortal}
+                  className="btn-pill bg-white dark:bg-muted border border-slate-200 dark:border-muted text-slate-700 dark:text-foreground hover:bg-slate-50 transition-colors w-full md:w-auto"
+                >
                   Manage Subscription
                 </button>
               ) : (
                 <button 
-                  onClick={() => setShowModal(true)}
+                  onClick={showPaywall}
                   className="btn-pill text-white flex items-center justify-center gap-2 w-full md:w-auto transition-transform hover:scale-105"
                   style={{ background: "linear-gradient(135deg, #7C3AED 0%, #9333EA 100%)", boxShadow: "0 4px 12px rgba(124,58,237,0.3)" }}
                 >

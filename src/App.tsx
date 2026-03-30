@@ -44,17 +44,21 @@ const AnimatedRoutes = () => {
   );
 };
 
+import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <NotificationSystem />
-            <AnimatedRoutes />
-          </TooltipProvider>
+          <SubscriptionProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <NotificationSystem />
+              <AnimatedRoutes />
+            </TooltipProvider>
+          </SubscriptionProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

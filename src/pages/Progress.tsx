@@ -3,6 +3,7 @@ import { ArrowLeft, TrendingUp, Calendar, Award, BarChart3, Clock, Flame, Brain,
 import { NavLink } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
@@ -20,6 +21,7 @@ const BADGES = [
 
 const Progress = () => {
   const { user, userProfile } = useAuth();
+  const { isPro: isSubscriptionPro, showPaywall } = useSubscription();
   const [loading, setLoading] = useState(true);
   const [moodData, setMoodData] = useState<any[]>([]);
   const [stats, setStats] = useState({
@@ -109,7 +111,7 @@ const Progress = () => {
   }
 
   const xp = userProfile?.total_xp || 0;
-  const isPro = userProfile?.plan === "pro";
+  const isPro = userProfile?.plan === "pro" || isSubscriptionPro;
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -154,7 +156,12 @@ const Progress = () => {
                     <Sparkles className="w-8 h-8 text-violet-500 mb-2 animate-bounce" />
                     <p className="text-sm font-heading font-bold text-foreground">Mood Trends (Pro Only)</p>
                     <p className="text-[10px] text-muted-foreground mb-4 text-center px-6">Upgrade to visualize your mental wellbeing patterns</p>
-                    <button className="px-5 py-2 bg-violet-600 text-white rounded-xl text-xs font-bold shadow-lg shadow-violet-200">Unlock Now</button>
+                    <button 
+                      onClick={showPaywall}
+                      className="px-5 py-2 bg-violet-600 text-white rounded-xl text-xs font-bold shadow-lg shadow-violet-200"
+                    >
+                      Unlock Now
+                    </button>
                   </div>
                 )}
                 <div className={!isPro ? "blur-sm pointer-events-none h-full" : "h-full"}>
